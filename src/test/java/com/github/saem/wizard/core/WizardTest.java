@@ -6,7 +6,6 @@
 
 package com.github.saem.wizard.core;
 
-import com.github.saem.wizard.core.HitPoints;
 import com.github.saem.wizard.core.Wizard;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -64,29 +63,4 @@ public class WizardTest {
         System.out.println(this.mapper.readValue(fixture("fixtures/wizard.json"), Wizard.class));
         System.out.println(wizard);
     }
-    
-    @Test
-    public void testIsUnconsciousReturnsFalseWhenHitPointsAreGreaterThanZero() {
-        Wizard wizard = new Wizard();
-        wizard.hp = new HitPoints(1);
-        boolean result = wizard.isUnconscious();
-        assertFalse(result);
-    }
-
-    @Test
-    public void testIsDeadReturnsFalseWhenHitPointsAreGreaterThanNegativeEleven() {
-        Wizard wizard = new Wizard();
-        wizard.hp = new HitPoints(-10);
-        boolean result = wizard.isDead();
-        assertFalse(result);
-    }
-
-    @Test
-    public void testIsAliveReturnsTrueWhenHitPointsAreGreaterThanZero() {
-        Wizard wizard = new Wizard();
-        wizard.hp = new HitPoints(1);
-        boolean result = wizard.isAlive();
-        assertTrue(result);
-    }
-    
 }

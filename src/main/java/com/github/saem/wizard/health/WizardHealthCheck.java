@@ -12,10 +12,8 @@ public class WizardHealthCheck extends HealthCheck {
     
     @Override
     protected Result check() throws Exception {
-        if(wizard.isUnconscious()) {
-            return Result.unhealthy("The wizard is unconscious, heal!");
-        } else if (wizard.isDead()) {
-            return Result.unhealthy("The wizard is dead, ressurect!");
+        if(!wizard.isAlive()) {
+            return Result.unhealthy("The wizard is down, heal!");
         }
 
         return Result.healthy();

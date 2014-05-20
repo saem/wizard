@@ -2,16 +2,20 @@ package com.github.saem.wizard.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
-@JsonIgnoreProperties({ "unconscious", "dead", "alive" })
 public class Wizard {
-    @JsonProperty
     public String name = "Rincewind";
+    
+    private int hp = 4;
 
-    @JsonProperty
-    @JsonDeserialize(as=HitPoints.class)
-    public HitPoints hp = new HitPoints(4);
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
 
     public Wizard() {
     }
@@ -20,23 +24,15 @@ public class Wizard {
         this.name = name;
     }
     
-    public boolean isUnconscious() {
-        return this.hp.isUnconscious();
-    }
-    
-    public boolean isDead() {
-        return this.hp.isDead();
-    }
-    
     public boolean isAlive() {
-        return this.hp.isAlive();
+        return this.hp > 0;
     }
     
     @Override
     public boolean equals(Object other) {
         if(other instanceof Wizard) {
             Wizard otherWizard = (Wizard) other;
-            return this.name == otherWizard.name
+            return (this.name == null ? otherWizard.name == null : this.name.equals(otherWizard.name))
                 && this.hp == otherWizard.hp
                 ;
         }
@@ -48,7 +44,7 @@ public class Wizard {
     public int hashCode() {
         int hash = 1;
         hash = hash * 17 + this.name.hashCode();
-        hash = hash * 31 + this.hp.hashCode();
+        hash = hash * 31 + this.hp;
         return hash;
     }
     
